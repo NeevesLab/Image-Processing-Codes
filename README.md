@@ -1,2 +1,2 @@
 # Image-Processing-Codes
-Codes we use for processing microscope images of blood clots formed in microfluidic flow assays. To see how these are all used in tandem open "Fluorescence Processing Demo.iypnb"
+Codes we use for processing microscope images of blood clots formed in microfluidic flow assays. To see how these are all used in tandem open [the demo ntebook file](Fluorescence Processing Demo.ipynb)
