@@ -15,7 +15,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
                                t_lag_level=250,rescale='None',background='None',
                                zero_index='None',threshold_filter=True,vsi=False,
                                cycle_vm=True,meta_number=None,image_channel=1,meta_stage_loop=True,
-                               t_sample=1
+                               t_sample=1,z_stack=False
                                ):
     
     # if a vsi file is specified then read in through vsi means rather than manually reading in tifs
@@ -24,7 +24,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
         if cycle_vm:
             javabridge.start_vm(class_path=bioformats.JARS)
         # read in metadata using bioformats and make ararys for t ans z slices
-        metadata=v.extract_metadata(filepath,cycle_vm=False,meta_number=meta_number,stage_loop=meta_stage_loop)
+        metadata=v.extract_metadata(filepath,cycle_vm=False,meta_number=meta_number,stage_loop=meta_stage_loop,z_stack=z_stack)
         t_slices=np.arange(0,metadata['size_T']-1)
         t_slices=t_slices[::t_sample]
         t_slices_scaled=t_slices*float(metadata['cycle time'])
@@ -37,7 +37,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
             # read in image and convert to 8 bit
             if len(z_slices)==1:
                 image=bioformats.load_image(path=filepath,t=t_slices[i],series=0)
-                if len(np.shape(image)>2):
+                if len(np.shape(image))>2:
                     image=image[:,:,image_channel]
             else:
                 image=max_projection(filepath,t_slices[i],z_slices,image_channel)
