@@ -27,7 +27,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
         metadata=v.extract_metadata(filepath,cycle_vm=False,meta_number=meta_number,stage_loop=meta_stage_loop,z_stack=z_stack)
         t_slices=np.arange(0,metadata['size_T']-1)
         t_slices=t_slices[::t_sample]
-        t_slices_scaled=t_slices*float(metadata['cycle time'])
+        t_slices_scaled=t_slices*float(metadata['cycle time'])*t_sample
         z_slices=np.arange(0,metadata['size_Z'])
         mean = np.empty(len(t_slices))
         minimum = np.empty(len(t_slices))
