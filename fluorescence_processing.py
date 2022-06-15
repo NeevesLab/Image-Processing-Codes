@@ -14,8 +14,8 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
                                zero_index_time=0,stats=False,show_linear=False,
                                t_lag_level=250,rescale='None',background='None',
                                zero_index=0,threshold_filter=True,vsi=True,
-                               cycle_vm=True,meta_number=None,image_channel=1,meta_stage_loop=True,
-                               t_sample=1,z_stack=False,endpoint=False,t_cutoff='None'
+                               cycle_vm=True,meta_number=None,image_channel=1,
+                               t_sample=1,t_cutoff='None'
                                ):
     
     # if a vsi file is specified then read in through vsi means rather than manually reading in tifs
@@ -24,8 +24,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
         if cycle_vm:
             javabridge.start_vm(class_path=bioformats.JARS)
         # read in metadata using bioformats and make ararys for t ans z slices
-        metadata=v.extract_metadata(filepath,cycle_vm=False,meta_number=meta_number,stage_loop=meta_stage_loop,z_stack=z_stack,
-                                    endpoint=endpoint)
+        metadata=v.extract_metadata(filepath,cycle_vm=False,meta_number=meta_number)
         metadata['cycle time']=float(metadata['cycle time'])/1000
         if endpoint:
             t_slices=[0]
@@ -162,7 +161,3 @@ def show_controller(count_pics,pic_length,*not_shown,pic_thresh=[20,50,90]):
     else:
         show_handler = False
     return show_handler,not_shown,pic_pct
-
-
-            
-            
