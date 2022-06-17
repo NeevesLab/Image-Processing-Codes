@@ -7,7 +7,7 @@ import javabridge
 import bioformats
 import vsi_metadata as v
 import metric_functions as m
-
+import crop_functions as cf
 
 def fluorescence_time_series (filepath,interval=18,threshold=100,
                                csv_path='',stats_path='',store_csv=False,
@@ -15,7 +15,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
                                t_lag_level=250,rescale='None',background='None',
                                zero_index=0,threshold_filter=True,vsi=True,
                                cycle_vm=True,meta_number=None,image_channel=1,
-                               t_sample=1,t_cutoff='None'
+                               t_sample=1,t_cutoff='None',crop=False
                                ):
     
     # if a vsi file is specified then read in through vsi means rather than manually reading in tifs
@@ -54,6 +54,10 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
                     image=image[:,:,image_channel]
             else:
                 image=max_projection(filepath,t_slices[i],z_slices,image_channel)
+            if crop:
+                if i==0:
+                    bounds=cf.get_bounds(image)
+                image=image[bounds[0]:bounds[2],bounds[1]:bounds[3]]
             mean[i] = np.mean(image)
             minimum[i] = np.min(image)
             maximum[i] = np.max(image)
