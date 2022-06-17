@@ -15,7 +15,7 @@ def fluorescence_time_series (filepath,interval=18,threshold=100,
                                t_lag_level=250,rescale='None',background='None',
                                zero_index=0,threshold_filter=True,vsi=True,
                                cycle_vm=True,meta_number=None,image_channel=1,
-                               t_sample=1,t_cutoff='None',crop=False
+                               t_sample=1,t_cutoff='None',crop=False,endpoint=False
                                ):
     
     # if a vsi file is specified then read in through vsi means rather than manually reading in tifs
